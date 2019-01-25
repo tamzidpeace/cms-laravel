@@ -12,10 +12,33 @@
 */
 
 Route::get('/', function () {
+    return view('welcome');
+    //return "hi your";
+});
+
+Route::get('/about', function () {
     //return view('welcome');
-    return "hi your";
+    return "hi about";
 });
 
-Route::group(['middleware' => ['web']], function () {
-
+Route::get('/contact', function () {
+    //return view('welcome');
+    return "its contact";
 });
+
+Route::get('/post/{id}/{name}', function ($id, $name){
+        return "this is post number " . $id . $name;
+});
+
+// name an url:
+
+Route::get('admin/post/example', array('as'=>'admin.home', function(){
+    $url = route('admin.home');
+    return $url;
+}));
+
+// commands to check route list: 'php artisan route:list'
+
+/*Route::group(['middleware' => ['web']], function () {
+
+});*/
