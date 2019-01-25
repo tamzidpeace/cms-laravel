@@ -16,7 +16,7 @@ Route::get('/', function () {
     //return "hi your";
 });
 
-Route::get('/about', function () {
+/*Route::get('/about', function () {
     //return view('welcome');
     return "hi about";
 });
@@ -35,10 +35,12 @@ Route::get('/post/{id}/{name}', function ($id, $name){
 Route::get('admin/post/example', array('as'=>'admin.home', function(){
     $url = route('admin.home');
     return $url;
-}));
+}));*/
 
 // commands to check route list: 'php artisan route:list'
 
 /*Route::group(['middleware' => ['web']], function () {
 
 });*/
+
+Route::get('/post', 'PostsController2@index');
