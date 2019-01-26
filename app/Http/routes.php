@@ -1,5 +1,7 @@
 <?php
 
+use App\Post;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -71,3 +73,21 @@ Route::get('admin/post/example', array('as'=>'admin.home', function(){
 /*Route::resource('posts', 'PostsController2');
 Route::get('/contact', 'PostsController2@contact');
 Route::get('post/{id}/{name}/{password}', 'PostsController2@show_post');*/
+
+/*
+|--------------------------------------------------------------------------
+| ELOQUENT
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/find', function () {
+
+    /*$posts = Post::all();
+
+    foreach ($posts as $post) {
+        return $post->title;
+    }*/
+
+    $post2 = Post::find(6);
+    return $post2->title;
+});
