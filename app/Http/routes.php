@@ -16,6 +16,30 @@ Route::get('/', function () {
     //return "hi your";
 });
 
+Route::get('/insert', function () {
+
+    DB::insert('insert into posts(title, content) values (?, ?)', ['Laravel', 'php with laravel']);
+});
+
+Route::get('/read', function () {
+
+    $result = DB::select('select * from posts where id = ?', [1]);
+
+    foreach ($result as $res) {
+        return $res->content . "<br>" . $res->title . "<br>" ;
+    }
+
+});
+
+Route::get('/update', function () {
+    DB::update('update posts set title = "Laravel 7" where id = ?', [1]);
+});
+
+Route::get('/delete', function (){
+    //DB::delete('delete from posts where id= "2" ');
+    DB::delete('delete from posts');
+});
+
 /*Route::get('/about', function () {
     //return view('welcome');
     return "hi about";
@@ -44,6 +68,6 @@ Route::get('admin/post/example', array('as'=>'admin.home', function(){
 });*/
 
 /*Route::get('/post/{id}', 'PostsController2@index');*/
-Route::resource('posts', 'PostsController2');
+/*Route::resource('posts', 'PostsController2');
 Route::get('/contact', 'PostsController2@contact');
-Route::get('post/{id}/{name}/{password}', 'PostsController2@show_post');
+Route::get('post/{id}/{name}/{password}', 'PostsController2@show_post');*/
