@@ -21,6 +21,7 @@ Route::get('/', function () {
 Route::get('/insert', function () {
 
     DB::insert('insert into posts(title, content) values (?, ?)', ['Laravel', 'php with laravel']);
+    echo "data inserted";
 });
 
 Route::get('/read', function () {
@@ -91,3 +92,83 @@ Route::get('/find', function () {
     $post2 = Post::find(6);
     return $post2->title;
 });
+
+Route::get('/findwhere', function (){
+
+    $post = Post::where('id', 6)->orderBy('id', 'desc')->take(1)->get();
+    return $post;
+});
+
+Route::get('/basicInsert', function () {
+    $post = new Post;
+    $post->title = 'php';
+    $post->content = 'php is awesome';
+    $post->save();
+
+    echo 'data updated';
+
+});
+
+Route::get('/basicInsert2', function () {
+    $post =  Post::find(8);
+    $post->title = 'php';
+    $post->content = 'php is awesome';
+    $post->save();
+
+    echo 'data updated';
+
+});
+
+Route::get('/create', function () {
+
+    Post::create(['title'=>'the create method', 'content'=>'real content']);
+});
+
+Route::get('/update', function () {
+    Post::where('id', 6)->update(['title'=>'new title', 'content'=>'new content']);
+});
+
+Route::get('/delete', function () {
+
+    //$post = Post::find(8);
+    //$post->delete();
+    //Post::destroy([8,9]);
+    //Post::find(12)->delete();
+
+    echo "data deleted";
+});
+
+Route::get('/softdelete', function () {
+
+    Post::find(7)->delete();
+
+    echo "soft deleted";
+});
+
+Route::get('/findsoftdelete', function () {
+
+    /*$post = Post::find(6);
+    return $post;*/
+    //echo "soft deleted";
+
+    /*$post = Post::withTrashed()->where('id', 6)->get();
+    return $post;*/
+
+    $post = Post::onlyTrashed()->where('id', 6)->get();
+    return $post;
+});
+
+Route::get('/restore', function () {
+
+    Post::withTrashed()->where('id', 6)->restore();
+
+    echo "restored";
+});
+
+Route::get('/forceDelete', function () {
+
+    Post::withTrashed()->where('id', 6)->forceDelete();
+
+    echo "forced deleted";
+});
+
