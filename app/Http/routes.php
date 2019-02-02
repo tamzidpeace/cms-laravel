@@ -1,6 +1,7 @@
 <?php
 
 use App\Post;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,7 @@ use App\Post;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('test');
     //return "hi your";
 });
 
@@ -29,7 +30,7 @@ Route::get('/read', function () {
     $result = DB::select('select * from posts where id = ?', [1]);
 
     foreach ($result as $res) {
-        return $res->content . "<br>" . $res->title . "<br>" ;
+        return $res->content . "<br>" . $res->title . "<br>";
     }
 
 });
@@ -38,7 +39,7 @@ Route::get('/update', function () {
     DB::update('update posts set title = "Laravel 7" where id = ?', [1]);
 });
 
-Route::get('/delete', function (){
+Route::get('/delete', function () {
     //DB::delete('delete from posts where id= "2" ');
     DB::delete('delete from posts');
 });
@@ -93,7 +94,7 @@ Route::get('/find', function () {
     return $post2->title;
 });
 
-Route::get('/findwhere', function (){
+Route::get('/findwhere', function () {
 
     $post = Post::where('id', 6)->orderBy('id', 'desc')->take(1)->get();
     return $post;
@@ -110,7 +111,7 @@ Route::get('/basicInsert', function () {
 });
 
 Route::get('/basicInsert2', function () {
-    $post =  Post::find(8);
+    $post = Post::find(8);
     $post->title = 'php';
     $post->content = 'php is awesome';
     $post->save();
@@ -121,11 +122,11 @@ Route::get('/basicInsert2', function () {
 
 Route::get('/create', function () {
 
-    Post::create(['title'=>'the create method', 'content'=>'real content']);
+    Post::create(['title' => 'the create method', 'content' => 'real content']);
 });
 
 Route::get('/update', function () {
-    Post::where('id', 6)->update(['title'=>'new title', 'content'=>'new content']);
+    Post::where('id', 6)->update(['title' => 'new title', 'content' => 'new content']);
 });
 
 Route::get('/delete', function () {
@@ -170,5 +171,43 @@ Route::get('/forceDelete', function () {
     Post::withTrashed()->where('id', 6)->forceDelete();
 
     echo "forced deleted";
+});
+
+
+// Eloquent Relationship
+// one to one relationship
+
+Route::get('/user/{id}/post', function ($id) {
+
+    return User::find($id)->post;
+});
+
+
+// reverse relation
+
+Route::get('/post/{id}/user', function ($id) {
+
+    return Post::find($id)->user->name;
+});
+
+// one to many
+
+Route::get('/posts', function () {
+
+    $user = User::find(1);
+
+    foreach ($user->posts as $post) {
+        return $post->title;
+    }
+});
+
+
+Route::get('/user/{id}/role', function ($id) {
+
+    $user = User::find($id);
+
+    foreach ($user->role4s as $role) {
+        echo $role->name;
+    }
 });
 
