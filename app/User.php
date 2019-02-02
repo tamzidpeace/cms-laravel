@@ -24,15 +24,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function post() {
+    public function post()
+    {
         return $this->hasOne('App\Post');
     }
 
-    public function posts() {
+    public function posts()
+    {
         return $this->hasMany('App\Post');
     }
 
-    public function role4s() {
+    public function role4s()
+    {
         return $this->belongsToMany('App\Role4');
+    }
+
+    public function rules()
+    {
+        return $this->belongsToMany('App\Rule');
     }
 }

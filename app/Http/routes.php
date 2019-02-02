@@ -211,3 +211,12 @@ Route::get('/user/{id}/role', function ($id) {
     }
 });
 
+Route::get('/user/{id}/rule', function ($id) {
+
+    $user = User::find($id);
+
+    foreach ($user->rules as $rule) {
+        return $rule->name;
+    }
+});
+
